@@ -28,23 +28,7 @@ bot.on("ready", async () =>  {
 });
 
 
-bot.on("message", async message => {
-    if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
-
-    let prefix = botconfig.prefix;
-    if(!message.content.startsWith(prefix)) return;
-
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
-
-    let commandfile = bot.commands.get(cmd.slice(prefix.length));
-    if(commandfile) commandfile.run(bot,message,args)
-
-  });
-
-  bot.on('voiceStateUpdate', (mold, mnew) => {
+bot.on('voiceStateUpdate', (mold, mnew) => {
     let guild = mnew.guild
           
       let voicealt = mold.voiceChannel
@@ -73,5 +57,22 @@ bot.on("message", async message => {
           logchannel.send(wentEmbed)        
       }
     })
+
+
+bot.on("message", async message => {
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+
+    let prefix = botconfig.prefix;
+    if(!message.content.startsWith(prefix)) return;
+
+    let messageArray = message.content.split(" ");
+    let cmd = messageArray[0];
+    let args = messageArray.slice(1);
+
+    let commandfile = bot.commands.get(cmd.slice(prefix.length));
+    if(commandfile) commandfile.run(bot,message,args)
+
+  });
 
 bot.login(botconfig.token);
